@@ -14,8 +14,15 @@ public class Main {
                 4. Вывести список разыгранных игрушек.
                 5. Изменить параметры игрушки.
                 6. Выход.""";
-        String quizToysFilePath = "src/main/java/org/ToyStore/QuizToys.txt";  //путь к разыгрываемым игрушкам
-        String quizzedToysFilePath = "src/main/java/org/ToyStore/QuizzedToys.txt";  //путь к разыгранным игрушкам
+        String quizToysFilePath = "C:\\Users\\Иван\\Desktop\\GB учеба\\7. Разработчик — Программист. Специализация\\" +
+                "5. Intermediate control work on the specialization block\\Task2. Toy store\\ToyStore\\src\\main\\" +
+                "java\\org\\Task2ToyStore\\QuizToys.txt";  //путь к разыгрываемым игрушкам
+        String quizzedToysFilePath = "C:\\Users\\Иван\\Desktop\\GB учеба\\7. Разработчик — Программист. Специализация\\" +
+                "5. Intermediate control work on the specialization block\\Task2. Toy store\\ToyStore\\src\\main\\" +
+                "java\\org\\Task2ToyStore\\QuizzedToys.txt";  //путь к разыгранным игрушкам
+
+//        String quizToysFilePath = "org/Task2ToyStore/QuizToys.txt";
+//        String quizzedToysFilePath = "org/Task2ToyStore/QuizzedToys.txt";
 
         Scanner sc = new Scanner(System.in);
         int val = 0;
@@ -39,9 +46,9 @@ public class Main {
                     //создаем список игрушек для розыгрыша из всех игрушек, при этом не выводим его на экран
                     int winIndex = new Random().nextInt(listOfToysForQuiz.size());  //рандомно выбираем индекс одной из них
                     String wonToy = listOfToysForQuiz.get(winIndex).  //для вывода названия выигранной игрушки создаем
-                            replace(":", "").         //строку с информацией об этой иргушке, переводим
-                            replace(",", "");         //её в массив строк, в котором название будет под
-                    System.out.println("Поздравляем! Вы выиграли игрушку " + wonToy.split(" ")[1] + "\n");  //индексом 1
+                            replace(",", ":");         //строку с информацией об этой иргушке, переводим
+                                                                       //её в массив строк, в котором название будет под
+                    System.out.println("Поздравляем! Вы выиграли игрушку " + wonToy.split(": ")[1] + "\n");  //индексом 1
                     saveToyToFile(quizzedToysFilePath, listOfToysForQuiz.get(winIndex));  //сохраняем информацию о выигранной игрушке в отдельный файл
                 }
                 case 4 -> readToysListFromFileAndPrint(quizzedToysFilePath, true);  //вывод списка разыгранных игрушек
@@ -56,7 +63,7 @@ public class Main {
                         bw.flush();
                         bw.close();
                     } catch (IOException e) {
-                        e.printStackTrace();
+                        System.out.println("Ошибка! Файл не найден!");
                     }
                 }
                 case 6 -> System.out.println("Завершение программы...");
@@ -170,14 +177,14 @@ public class Main {
             while (br.ready()) {
                 list.add(br.readLine());
             }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        if (list.isEmpty()) System.out.println("Список пуст!");  //если список пуст, сообщаем об этом
-        else if (flag){  //если flag=true, распечатываем пронумерованный список игрушек, иначе не распечатываем
-            for (int i = 0; i < list.size(); i++) {
-                System.out.println((i + 1) + ". " + list.get(i));
+            if (list.isEmpty()) System.out.println("Список пуст!");  //если список пуст, сообщаем об этом
+            else if (flag){  //если flag=true, распечатываем пронумерованный список игрушек, иначе не распечатываем
+                for (int i = 0; i < list.size(); i++) {
+                    System.out.println((i + 1) + ". " + list.get(i));
+                }
             }
+        } catch (IOException e) {
+            System.out.println("Ошибка! Файл не найден!");
         }
         System.out.println();
         return list;
@@ -195,7 +202,7 @@ public class Main {
             bw.flush();
             bw.close();
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("Ошибка! Файл не найден!");
         }
     }
 }
